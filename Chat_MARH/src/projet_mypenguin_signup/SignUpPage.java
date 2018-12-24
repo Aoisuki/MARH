@@ -127,7 +127,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Lucida Calligraphy", 0, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(57, 113, 177));
-        jLabel5.setText("My Penguin");
+        jLabel5.setText("Koneko Chat");
 
         jLabel6.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
