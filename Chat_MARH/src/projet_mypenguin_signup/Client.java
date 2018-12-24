@@ -109,7 +109,7 @@ public class Client extends javax.swing.JFrame {
             while(!msgin.equals("disconnect"))
             {
                 msgin = din.readUTF();
-                msg_area.setText(msg_area.getText().trim()+"\n Server:\t"+msgin);                
+                msg_area.setText(msg_area.getText().trim()+"\nServer:\t"+msgin);                
             }
         } catch (Exception e) {}
     }

@@ -127,7 +127,7 @@ public class Server extends javax.swing.JFrame {
             while(!msgin.equals("exit"))
             {
                 msgin = din.readUTF();
-                msg_area.setText(msg_area.getText().trim()+"\n Client:\t"+msgin);
+                msg_area.setText(msg_area.getText().trim()+"\nClient:\t"+msgin);
             }
         }catch(Exception e){}
     }
