@@ -73,7 +73,7 @@ public class Client extends javax.swing.JFrame {
     private void msg_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_sendActionPerformed
         try {
             String msgout = msg_text.getText().trim();
-            String request = "INSERT INTO message_txt(id_user, texte, date_msg_txt, id_room) VALUES ('0001', '" +msgout+ "', NOW(), '01')";
+            String request = "INSERT \"'00001', '"+msgout+"', NOW(), '01'\" message_txt";
             dout.writeUTF(request);
         } catch(Exception ae){}
     }
@@ -106,8 +106,7 @@ public class Client extends javax.swing.JFrame {
             dout = new DataOutputStream(s.getOutputStream());
             String msgin="";
             
-            while(!msgin.equals("disconnect"))
-            {
+            while(!msgin.equals("disconnect")) {
                 msgin = din.readUTF();
                 msg_area.setText(msg_area.getText().trim()+"\nServer:\t"+msgin);                
             }

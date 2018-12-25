@@ -115,21 +115,19 @@ public class Server extends javax.swing.JFrame {
             new Server().setVisible(true);
         });
         
-        String msgin = "";
+        
         try {
-            
             ss = new ServerSocket(1201);
             s = ss.accept();
-            
             din = new DataInputStream(s.getInputStream());
             dout = new DataOutputStream(s.getOutputStream());
+            String msgin = "";
             
-            while(!msgin.equals("exit"))
-            {
+            while(!msgin.equals("exit")) {
                 msgin = din.readUTF();
                 msg_area.setText(msg_area.getText().trim()+"\nClient:\t"+msgin);
             }
-        }catch(Exception e){}
+        } catch(Exception e){}
     }
 
     private javax.swing.JScrollPane jScrollPane1;
