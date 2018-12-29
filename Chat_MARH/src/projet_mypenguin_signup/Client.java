@@ -76,6 +76,7 @@ public class Client extends javax.swing.JFrame {
     private void msg_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_sendActionPerformed
         try {
         	String msg = msg_text.getText().trim();
+        	msg = "INSERT \"'00001', '"+msg+"', NOW(), '01'\" message_txt";
         	buf = msg.getBytes();
         	DatagramPacket packet = new DatagramPacket (buf, buf.length, address, 4242);
         	socket.send(packet);
