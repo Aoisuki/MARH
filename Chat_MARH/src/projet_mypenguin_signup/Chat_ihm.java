@@ -77,7 +77,7 @@ public class Chat_ihm extends javax.swing.JFrame {
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 540, 630));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Roat9\\Desktop\\Projet MyPenguin\\light.jpg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("img/light.jpg")); // NOI18N
         jLabel2.setText("jLabel2");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 680));
 
