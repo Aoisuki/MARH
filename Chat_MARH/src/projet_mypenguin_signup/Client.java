@@ -84,7 +84,8 @@ public class Client extends javax.swing.JFrame {
         	//socket.send(packet);
             String msgout = msg_text.getText().trim();
             String request = "INSERT \"'00001', '"+msgout+"', NOW(), '01'\" message_txt";
-            dout.writeUTF(request);
+            byte[] req = request.getBytes();
+            dout.write(req);
         } catch(Exception ae){}
     }
 
