@@ -118,7 +118,7 @@ public class Client extends javax.swing.JFrame {
            din = new DataInputStream(s.getInputStream());
            dout = new DataOutputStream(s.getOutputStream());
            String msgin="";
-            
+             
             while(!msgin.equals("disconnect")) {
                 msgin = din.readUTF();
                 msg_area.setText(msg_area.getText().trim()+"\nServer:\t"+msgin);                
