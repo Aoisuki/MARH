@@ -1,18 +1,20 @@
 package projet_mypenguin_signup;
 
-//import java.io.DataInputStream;
-//import java.io.DataOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-//import java.net.Socket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Client extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;
-//	static Socket s;
-//  static DataInputStream din;
-//  static DataOutputStream dout;
+	static Socket s;
+	static DataInputStream din;
+	static DataOutputStream dout;
     
     public Client() {
         initComponents();
@@ -75,18 +77,18 @@ public class Client extends javax.swing.JFrame {
 
     private void msg_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_sendActionPerformed
         try {
-        	String msg = msg_text.getText().trim();
-        	msg = "INSERT \"'00001', '"+msg+"', NOW(), '01'\" message_txt";
-        	buf = msg.getBytes();
-        	DatagramPacket packet = new DatagramPacket (buf, buf.length, address, 4242);
-        	socket.send(packet);
-//            String msgout = msg_text.getText().trim();
-//            String request = "INSERT \"'00001', '"+msgout+"', NOW(), '01'\" message_txt";
-//            dout.writeUTF(request);
+        	//String msg = msg_text.getText().trim();
+        	//msg = "INSERT \"'00001', '"+msg+"', NOW(), '01'\" message_txt";
+        	//buf = msg.getBytes();
+        	//DatagramPacket packet = new DatagramPacket (buf, buf.length, address, 4242);
+        	//socket.send(packet);
+            String msgout = msg_text.getText().trim();
+            String request = "INSERT \"'00001', '"+msgout+"', NOW(), '01'\" message_txt";
+            dout.writeUTF(request);
         } catch(Exception ae){}
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws UnknownHostException, IOException {
     	try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -106,30 +108,30 @@ public class Client extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(() -> {
             new Client().setVisible(true);
-        });
+        });   
+//    	try {
+//	    	socket = new DatagramSocket();
+//	    	address = InetAddress.getByName("localhost");
+//    	} catch (Exception e) {}
+        try {
+           s = new Socket("127.0.0.1",5000);
+           din = new DataInputStream(s.getInputStream());
+           dout = new DataOutputStream(s.getOutputStream());
+           String msgin="";
+            
+            while(!msgin.equals("disconnect")) {
+                msgin = din.readUTF();
+                msg_area.setText(msg_area.getText().trim()+"\nServer:\t"+msgin);                
+            }
+        }catch (Exception e) {}
         
-    	try {
-	    	socket = new DatagramSocket();
-	    	address = InetAddress.getByName("localhost");
-    	} catch (Exception e) {}
-//        try {
-//           s = new Socket("127.0.0.1",1201);
-//           din = new DataInputStream(s.getInputStream());
-//           dout = new DataOutputStream(s.getOutputStream());
-//            String msgin="";
-//            
-//            while(!msgin.equals("disconnect")) {
-//                msgin = din.readUTF();
-//                msg_area.setText(msg_area.getText().trim()+"\nServer:\t"+msgin);                
-//            }
-//        
     }
 
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JTextArea msg_area;
     private javax.swing.JButton msg_send;
     private javax.swing.JTextField msg_text;
-	private static DatagramSocket socket;
-	private static InetAddress address;
-	private byte[] buf;
+//	private static DatagramSocket socket;
+//	private static InetAddress address;
+//	private byte[] buf;
 }
