@@ -83,7 +83,7 @@ public class Client extends javax.swing.JFrame {
         	//DatagramPacket packet = new DatagramPacket (buf, buf.length, address, 4242);
         	//socket.send(packet);
             String msgout = msg_text.getText().trim();
-            String request = "INSERT \"'00001', '"+msgout+"', NOW(), '01'\" message_txt";
+            String request = "INSERT§'00002', '"+msgout+"', NOW(), '01'§message_txt";
             byte[] req = request.getBytes();
             dout.write(req);
         } catch(Exception ae){}
