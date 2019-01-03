@@ -88,7 +88,7 @@ public class Client extends javax.swing.JFrame {
             dout.write(req);
         } catch(Exception ae){}
     }
-
+    
     public static void main(String args[]) throws UnknownHostException, IOException {
     	try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
