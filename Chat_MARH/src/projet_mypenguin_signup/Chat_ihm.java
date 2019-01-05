@@ -6,11 +6,13 @@
 package projet_mypenguin_signup;
 
 import java.awt.Color;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import projet_mypenguin_signup.ClientSocket;
 
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 /**
@@ -93,12 +95,17 @@ public class Chat_ihm extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 680));
         
         try {
-	        String userOnline = "SELECT§'pseudo',FROM§'users',WHERE§'statut='online'";
-	        byte[] req = userOnline.getBytes();
-	        String text = req.toString();
-	        jTextArea3.setText(text);
+        	ClientSocket csocket = new ClientSocket("127.0.0.1",4242);
+        	csocket.connect("127.0.0.1",4242); 
+        	
+        	String userOnline = "SELEWH§pseudo§users§statut§online";
+	        
+        	csocket.sendMsg(userOnline);
+        	String users = csocket.recvMsg();     	
+	        
+	        jTextArea3.setText(users);
 	       
-			dout.write(req);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
