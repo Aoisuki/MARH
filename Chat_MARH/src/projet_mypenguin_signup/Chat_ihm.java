@@ -6,6 +6,12 @@
 package projet_mypenguin_signup;
 
 import java.awt.Color;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 /**
  *
@@ -15,7 +21,7 @@ public class Chat_ihm extends javax.swing.JFrame {
 
     /**
      * Creates new form Chat_ihm
-     */
+     */	
     public Chat_ihm() {
         initComponents();
         
@@ -34,13 +40,16 @@ public class Chat_ihm extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField(); 
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        jTextArea3 = new javax.swing.JTextArea(); //liste d'amis connecté
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextArea1 = new javax.swing.JTextArea(); //afficher les msgs
         jLabel2 = new javax.swing.JLabel();
-
+        
+        
+        //msg_text = new javax.swing.JTextField();
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new AbsoluteLayout());
@@ -57,6 +66,7 @@ public class Chat_ihm extends javax.swing.JFrame {
 
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("Envoyer un message");
+       //jTextField1.setUI(new HintTextFieldUI("Search", true));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -67,27 +77,54 @@ public class Chat_ihm extends javax.swing.JFrame {
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
         jScrollPane3.setViewportView(jTextArea3);
-
+        jTextArea3.setEditable(false);
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 240, 630));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
-
+        jTextArea1.setEditable(false);
+        
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 540, 630));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon("img/light.jpg")); // NOI18N
         jLabel2.setText("jLabel2");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 680));
-
+        
+        try {
+	        String userOnline = "SELECT§'pseudo',FROM§'users',WHERE§'statut='online'";
+	        byte[] req = userOnline.getBytes();
+	        String text = req.toString();
+	        jTextArea3.setText(text);
+	       
+			dout.write(req);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 960, 688));
-
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+    	 try {
+         	//String msg = msg_text.getText().trim();
+         	//msg = "INSERT \"'00001', '"+msg+"', NOW(), '01'\" message_txt";
+         	//buf = msg.getBytes();
+         	//DatagramPacket packet = new DatagramPacket (buf, buf.length, address, 4242);
+         	//socket.send(packet);
+             String msgout =  jTextField1.getText().trim();
+             String request = "INSERTÂ§'00002', '"+msgout+"', NOW(), '01'Â§message_txt";
+             byte[] req = request.getBytes();
+             dout.write(req);
+         } catch(Exception ae){
+        	 
+         }
+    	 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -97,28 +134,28 @@ public class Chat_ihm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
+    public static void main(String args[]) throws UnknownHostException, IOException {
+    	try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
+            
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Chat_ihm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Chat_ihm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Chat_ihm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Chat_ihm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+
+        java.awt.EventQueue.invokeLater(() -> {
+            new Client().setVisible(true);
+        });   
         //</editor-fold>
 
         /* Create and display the form */
@@ -138,5 +175,12 @@ public class Chat_ihm extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextField jTextField1;
+    
+    private javax.swing.JTextField msg_text;
+    
+	private static final long serialVersionUID = 1L;
+	static Socket s;
+	static DataInputStream din;
+	static DataOutputStream dout;
     // End of variables declaration//GEN-END:variables
 }
