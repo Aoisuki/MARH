@@ -28,6 +28,7 @@ public class Chat_ihm extends javax.swing.JFrame{
     	this.csock = csock;
         initComponents();
         afficheFriendList(csock);
+        afficheMsg(csock);
     }
 
     /**
@@ -79,7 +80,7 @@ public class Chat_ihm extends javax.swing.JFrame{
         jTextArea3.setRows(5);
         //jScrollPane3.setViewportView(jTextArea3);
         jTextArea3.setEditable(false);
-        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 240, 630));
+        jPanel2.add(jTextArea3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 240, 630));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -146,7 +147,6 @@ public class Chat_ihm extends javax.swing.JFrame{
     	//StringBuilder sb = new StringBuilder(array.length);
     	 try {
          	
-         	
          	String userOnline = "SELEWH§pseudo§users§statut§online";
          	csock.sendMsg(userOnline);
          	
@@ -182,16 +182,18 @@ public class Chat_ihm extends javax.swing.JFrame{
  		}
     }
     
-    private void afficheMsg() {
+    private void afficheMsg(ClientSocket csock) {
     	try {
-         	//ClientSocket csocket = new ClientSocket("127.0.0.1",4242);
-         	 
-         	String msgRoom = "SELEWH§date_msg_txt"; 
+         	String msgRoom = "SELEWH§date_msg_txt,text§message_txt§id_room§01"; 
  	       
          	csock.sendMsg(msgRoom);
-         	String msg = csock.recvMsg();     	
+         	String msg = csock.recvMsg();
+         	System.out.println(msg);
+         	
+         	//String splitMsg[] = msg.split("\\Â§");
  	        
  	        jTextArea1.setText(msg);
+ 	        //jTextArea1.setText(splitMsg[1]);
  	       
  			
  		} catch (IOException e) {

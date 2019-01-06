@@ -40,7 +40,8 @@ public class ClientSocket {
 		byte[] request = req.getBytes();
 		try {
 			dout.write(request);
-			dout.close();
+			dout.wait();
+			//dout.close();
 		}
 		catch(Exception e){
 			
@@ -48,14 +49,19 @@ public class ClientSocket {
 	}
 	
 	public String recvMsg() throws IOException {
-		String res = "";
+		StringBuilder resultat = new StringBuilder();
+		String tmp;
 		try {
-			res = din.readLine();
-			din.close();
+			while((tmp=din.readLine())!=null){
+				resultat.append(tmp);
+				System.out.println(tmp);
+				din.wait();
+			}
+			//din.close();
 		}
 		catch(Exception e){
 			
 		}
-		return res;
+		return resultat.toString();
 	}
 }
