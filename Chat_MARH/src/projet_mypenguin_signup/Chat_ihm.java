@@ -19,16 +19,14 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  *
  * @author Roat9
  */
-public class Chat_ihm extends javax.swing.JFrame {
+public class Chat_ihm extends javax.swing.JFrame{
 
     /**
      * Creates new form Chat_ihm
      */	
-    public Chat_ihm() {
+    public Chat_ihm(ClientSocket csock) {
         initComponents();
-        
-        jTextField1.setBackground(new Color(0,0,0,0));
-        jTextArea1.setBackground(new Color(0,0,0,100));
+        afficheFriendList(csock);
     }
 
     /**
@@ -78,7 +76,7 @@ public class Chat_ihm extends javax.swing.JFrame {
 
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        //jScrollPane3.setViewportView(jTextArea3);
         jTextArea3.setEditable(false);
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 240, 630));
 
@@ -94,26 +92,14 @@ public class Chat_ihm extends javax.swing.JFrame {
         jLabel2.setText("jLabel2");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 680));
         
-        try {
-        	ClientSocket csocket = new ClientSocket("127.0.0.1",4242);
-        	csocket.connect("127.0.0.1",4242); 
-        	
-        	String userOnline = "SELEWH§pseudo§users§statut§online";
-	        
-        	csocket.sendMsg(userOnline);
-        	String users = csocket.recvMsg();     	
-	        
-	        jTextArea3.setText(users);
-	       
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        
         
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 960, 688));
         
         pack();
+        
+        jTextField1.setBackground(new Color(0,0,0,0));
+        jTextArea1.setBackground(new Color(0,0,0,100));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -137,7 +123,82 @@ public class Chat_ihm extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+    
+   /* public static String[] split(String text, String delimiter) {
+        java.util.List<String> parts = new java.util.ArrayList<String>();
 
+        text += delimiter;
+
+        for (int i = text.indexOf(delimiter), j=0; i != -1;) {
+            String temp = text.substring(j,i);
+            if(temp.trim().length() != 0) {
+                parts.add(temp);
+            }
+            j = i + delimiter.length();
+            i = text.indexOf(delimiter,j);
+        }
+
+        return parts.toArray(new String[0]);
+    }
+    */
+    private void afficheFriendList(ClientSocket csock) {
+    	int i = 0;
+    	//StringBuilder sb = new StringBuilder(array.length);
+    	 try {
+         	
+         	
+         	String userOnline = "SELEWH§pseudo§users§statut§online";
+ 	        
+         	csock.sendMsg(userOnline);
+         	String str = csock.recvMsg();  
+         	
+         	String splitStr[] = str.split("\\Â§");
+         	
+ 	       /* 
+ 	        String split[]=users.split("\\Â§");
+ 	        while (splitStr != null) {
+ 	        	String[] userEnLigne = splitStr[i];
+ 	        	i++;
+ 	        }
+ 	        String split[] = StringUtils.split(str,"Â§");
+         	String delimiter = "-";
+            String result[] = split(str, delimiter);
+ 	        */
+         	
+         	
+            /*
+            for(String s:result) {
+            	array[i] = arrayNumbers;
+                sb.append(array[i]);
+            }
+                
+            */
+ 	        jTextArea3.setText(splitStr[0]);
+ 	       
+ 			
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+    }
+    
+    private void afficheMsg() {
+    	try {
+         	ClientSocket csocket = new ClientSocket("127.0.0.1",4242);
+         	
+         	String msgRoom = "SELEWH§date_msg_txt";
+ 	        
+         	csocket.sendMsg(msgRoom);
+         	String msg = csocket.recvMsg();     	
+ 	        
+ 	        jTextArea1.setText(msg);
+ 	       
+ 			
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+    }
     /**
      * @param args the command line arguments
      */
@@ -168,7 +229,7 @@ public class Chat_ihm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Chat_ihm().setVisible(true);
+                new Chat_ihm(null).setVisible(true);
             }
         });
     }
@@ -183,7 +244,7 @@ public class Chat_ihm extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextField jTextField1;
     
-    private javax.swing.JTextField msg_text;
+   // private javax.swing.JTextField msg_text;
     
 	private static final long serialVersionUID = 1L;
 	static Socket s;

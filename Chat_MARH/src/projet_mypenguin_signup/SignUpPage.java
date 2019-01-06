@@ -197,6 +197,7 @@ public class SignUpPage extends javax.swing.JFrame {
     	
     	try {
 			ClientSocket csocket = new ClientSocket(jTextFieldAdresse.getText(),i);
+			Chat_ihm client = new Chat_ihm(csocket);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -204,7 +205,7 @@ public class SignUpPage extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        Chat_ihm client = new Chat_ihm();
+        
     }//GEN-LAST:event_jButtonCoActionPerformed
 
     /**
