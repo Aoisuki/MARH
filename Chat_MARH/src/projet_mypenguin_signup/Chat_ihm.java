@@ -25,6 +25,7 @@ public class Chat_ihm extends javax.swing.JFrame{
      * Creates new form Chat_ihm
      */	
     public Chat_ihm(ClientSocket csock) {
+    	this.csock = csock;
         initComponents();
         afficheFriendList(csock);
     }
@@ -42,7 +43,7 @@ public class Chat_ihm extends javax.swing.JFrame{
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField(); 
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea(); //liste d'amis connecté
+        jTextArea3 = new javax.swing.JTextArea(); //liste d'amis connectï¿½
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea(); //afficher les msgs
         jLabel2 = new javax.swing.JLabel();
@@ -112,8 +113,7 @@ public class Chat_ihm extends javax.swing.JFrame{
          	//socket.send(packet);
              String msgout =  jTextField1.getText().trim();
              String request = "INSERTÂ§'00002', '"+msgout+"', NOW(), '01'Â§message_txt";
-             byte[] req = request.getBytes();
-             dout.write(req);
+             csock.sendMsg(request);
          } catch(Exception ae){
         	 
          }
@@ -147,12 +147,12 @@ public class Chat_ihm extends javax.swing.JFrame{
     	 try {
          	
          	
-         	String userOnline = "SELEWH§pseudo§users§statut§online";
+         	String userOnline = "SELEWHÂ§pseudoÂ§usersÂ§statutÂ§online";
  	        
          	csock.sendMsg(userOnline);
          	String str = csock.recvMsg();  
          	
-         	String splitStr[] = str.split("\\Â§");
+         	String splitStr[] = str.split("\\Ã‚Â§");
          	
  	       /* 
  	        String split[]=users.split("\\Â§");
@@ -184,12 +184,12 @@ public class Chat_ihm extends javax.swing.JFrame{
     
     private void afficheMsg() {
     	try {
-         	ClientSocket csocket = new ClientSocket("127.0.0.1",4242);
+         	//ClientSocket csocket = new ClientSocket("127.0.0.1",4242);
          	
-         	String msgRoom = "SELEWH§date_msg_txt";
+         	String msgRoom = "SELEWHÂ§date_msg_txt";
  	        
-         	csocket.sendMsg(msgRoom);
-         	String msg = csocket.recvMsg();     	
+         	csock.sendMsg(msgRoom);
+         	String msg = csock.recvMsg();     	
  	        
  	        jTextArea1.setText(msg);
  	       
@@ -247,8 +247,9 @@ public class Chat_ihm extends javax.swing.JFrame{
    // private javax.swing.JTextField msg_text;
     
 	private static final long serialVersionUID = 1L;
-	static Socket s;
-	static DataInputStream din;
-	static DataOutputStream dout;
+	private ClientSocket csock;
+	//static Socket s;
+	//static DataInputStream din;
+	//static DataOutputStream dout;
     // End of variables declaration//GEN-END:variables
 }
