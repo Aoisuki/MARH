@@ -38,10 +38,24 @@ public class ClientSocket {
 	
 	public void sendMsg(String req) throws IOException {
 		byte[] request = req.getBytes();
-        dout.write(request);
+		try {
+			dout.write(request);
+			dout.close();
+		}
+		catch(Exception e){
+			
+		}
 	}
 	
 	public String recvMsg() throws IOException {
-		 return din.readUTF();
+		String res = "";
+		try {
+			res = din.readLine();
+			din.close();
+		}
+		catch(Exception e){
+			
+		}
+		return res;
 	}
 }

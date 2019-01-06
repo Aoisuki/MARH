@@ -192,12 +192,13 @@ public class SignUpPage extends javax.swing.JFrame {
     	try {
     	    i = Integer.parseInt(port);
     	} catch (NumberFormatException e){
-    	    // n'est pas un nombre, gérer ce cas
+    	    // n'est pas un nombre, gï¿½rer ce cas
     	}
     	
     	try {
 			ClientSocket csocket = new ClientSocket(jTextFieldAdresse.getText(),i);
 			Chat_ihm client = new Chat_ihm(csocket);
+			client.setVisible(true);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

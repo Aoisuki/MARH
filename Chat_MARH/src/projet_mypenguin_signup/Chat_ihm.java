@@ -148,10 +148,10 @@ public class Chat_ihm extends javax.swing.JFrame{
          	
          	
          	String userOnline = "SELEWH§pseudo§users§statut§online";
- 	        
          	csock.sendMsg(userOnline);
-         	String str = csock.recvMsg();  
          	
+         	String str = csock.recvMsg();
+         	System.out.println(str);
          	String splitStr[] = str.split("\\Â§");
          	
  	       /* 
