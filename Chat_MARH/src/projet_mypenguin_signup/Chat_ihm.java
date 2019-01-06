@@ -185,7 +185,7 @@ public class Chat_ihm extends javax.swing.JFrame{
     private void afficheMsg() {
     	try {
          	//ClientSocket csocket = new ClientSocket("127.0.0.1",4242);
-         	
+         	 
          	String msgRoom = "SELEWH§date_msg_txt"; 
  	        
          	csock.sendMsg(msgRoom);
