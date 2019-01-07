@@ -64,4 +64,13 @@ public class ClientSocket {
 		}
 		return resultat.toString();
 	}
+	
+	public void closeSocket() {
+		try {
+			s.close();
+		} catch (IOException e) {
+			System.out.println("Ne peux pas fermer le socket");
+			e.printStackTrace();
+		}
+	}
 }

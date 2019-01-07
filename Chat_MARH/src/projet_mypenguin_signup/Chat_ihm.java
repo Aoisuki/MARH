@@ -6,12 +6,17 @@
 package projet_mypenguin_signup;
 
 import java.awt.Color;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import projet_mypenguin_signup.ClientSocket;
 
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -24,8 +29,9 @@ public class Chat_ihm extends javax.swing.JFrame{
     /**
      * Creates new form Chat_ihm
      */	
-    public Chat_ihm(ClientSocket csock) {
+    public Chat_ihm(ClientSocket csock, String pseudo) {
     	this.csock = csock;
+    	this.pseudo = pseudo;
         initComponents();
         afficheFriendList(csock);
         afficheMsg(csock);
@@ -94,7 +100,24 @@ public class Chat_ihm extends javax.swing.JFrame{
         jLabel2.setText("jLabel2");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 680));
         
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
+        this.addWindowListener(new WindowAdapter(){ // On close
+            public void windowClosing(WindowEvent e){
+                int i=JOptionPane.showConfirmDialog(null, "Vous allez quitter et être déconnecté");
+                if(i==0) {
+                	updateUser = "UPDATE§users§statut§offline§pseudo§" +pseudo;
+                	try {
+						csock.sendMsg(updateUser);
+						csock.closeSocket();
+					} catch (IOException e1) {
+						System.out.println("Ne peux pas marquer l'utilisateur comme déconnecté");
+						e1.printStackTrace();
+					}
+                    System.exit(0);
+                }
+            }
+        });
         
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 960, 688));
         
@@ -143,7 +166,7 @@ public class Chat_ihm extends javax.swing.JFrame{
     }
     */
     private void afficheFriendList(ClientSocket csock) {
-    	int i = 0;
+    	int nbPersonnesConnectees = 0, i = 0;
     	//StringBuilder sb = new StringBuilder(array.length);
     	 try {
          	
@@ -153,6 +176,18 @@ public class Chat_ihm extends javax.swing.JFrame{
          	String str = csock.recvMsg();
          	System.out.println(str);
          	String splitStr[] = str.split("\\Ã‚Â§");
+         	
+         	for (i = 0;i < splitStr.length;i++) { //compter nbPersonnesConnectees
+                nbPersonnesConnectees++;
+            }
+
+            String[] onlineUsers = new String[nbPersonnesConnectees];
+            StringBuilder sb = new StringBuilder(nbPersonnesConnectees);
+            for (i = 0; i < nbPersonnesConnectees; i++) {
+                sb.append(onlineUsers[i]+"\n");
+            }
+
+            jTextArea3.setText(sb.toString());
          	
  	       /* 
  	        String split[]=users.split("\\Â§");
@@ -172,8 +207,7 @@ public class Chat_ihm extends javax.swing.JFrame{
                 sb.append(array[i]);
             }
                 
-            */
- 	        jTextArea3.setText(splitStr[0]);
+ 	        jTextArea3.setText(splitStr[0]); */
  	       
  			
  		} catch (IOException e) {
@@ -231,7 +265,7 @@ public class Chat_ihm extends javax.swing.JFrame{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Chat_ihm(null).setVisible(true);
+                new Chat_ihm(null, null).setVisible(true);
             }
         });
     }
@@ -250,6 +284,8 @@ public class Chat_ihm extends javax.swing.JFrame{
     
 	private static final long serialVersionUID = 1L;
 	private ClientSocket csock;
+	private String pseudo;
+	private String updateUser;
 	//static Socket s;
 	//static DataInputStream din;
 	//static DataOutputStream dout;

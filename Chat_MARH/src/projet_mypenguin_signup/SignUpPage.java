@@ -6,6 +6,10 @@
 package projet_mypenguin_signup;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import projet_mypenguin_signup.Chat_ihm;
 import projet_mypenguin_signup.ClientSocket;
@@ -195,19 +199,63 @@ public class SignUpPage extends javax.swing.JFrame {
     	    // n'est pas un nombre, gï¿½rer ce cas
     	}
     	
-    	try {
-			ClientSocket csocket = new ClientSocket(jTextFieldAdresse.getText(),i);
-			Chat_ihm client = new Chat_ihm(csocket);
-			client.setVisible(true);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
+    	if (compareID()) {
+    		try {
+    			ClientSocket csocket = new ClientSocket(jTextFieldAdresse.getText(),i);
+    			String updateUser = "UPDATE§users§statut§online§pseudo§" +jTextFieldPseudo.getText();
+    			csocket.sendMsg(updateUser);
+    			Chat_ihm client = new Chat_ihm(csocket, jTextFieldPseudo.getText());
+    			client.setVisible(true);
+    		} catch (UnknownHostException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	else {
+    		JOptionPane.showMessageDialog(new JFrame(), "Verify your user info", "Alert", JOptionPane.ERROR_MESSAGE);
+    	}        
     }//GEN-LAST:event_jButtonCoActionPerformed
+    
+    public boolean compareID() { // Si la lecture de la BD était bonne...
+    	if (jTextFieldPseudo.getText().equals("Simidog")) {
+    		if (jPasswordField.getText().equals("test")) {
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
+    	else if (jTextFieldPseudo.getText().equals("Aoisuki")) {
+    		if (jPasswordField.getText().equals("mot_clé")) {
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
+    	else if (jTextFieldPseudo.getText().equals("cdaveau")) {
+    		if (jPasswordField.getText().equals("1234")) {
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
+    	else if (jTextFieldPseudo.getText().equals("AntoineLg")) {
+    		if (jPasswordField.getText().equals("genial")) {
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
+    	else {
+    		return false;
+    	}
+    }
 
     /**
      * @param args the command line arguments
@@ -260,5 +308,6 @@ public class SignUpPage extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldPort;
     private javax.swing.JTextField jTextFieldPseudo;
     private javax.swing.JTextField jTextFieldPseudo1;
+    private HashMap<String, String> hashMap;
     // End of variables declaration//GEN-END:variables
 }
